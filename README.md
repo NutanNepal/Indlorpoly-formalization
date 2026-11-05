@@ -16,37 +16,6 @@ by Christopher Eur, Nutan Nepal, Daniel Qin — [arXiv:2605.05319v2](https://arx
 
 ---
 
-## Quick Start
-
-**Prerequisites:** Lean 4.36.0-rc2 via [elan](https://github.com/leanprover/elan).
-
-```bash
-# Clone
-git clone https://github.com/NutanNepal/lean-playground-indlorpoly.git
-cd lean-playground-indlorpoly
-
-# Fetch mathlib cache (fast build)
-lake exe cache get
-
-# Build verified library (11 modules, 0 sorries)
-lake build
-
-# Build a single module
-lake build IndLorPoly.Basic_verified
-lake build IndLorPoly.Symbol_verified
-
-# Check all files
-lake build IndLorPoly
-```
-
-**Toolchain:** pinned in [`lean-toolchain`](lean-toolchain) (`leanprover/lean4:v4.36.0-rc2`),
-Mathlib `7881f45c` in [`lake-manifest.json`](lake-manifest.json).
-
-Paper sources: [`ilp-cdraft.tex`](ilp-cdraft.tex) / [`ilp-cdraft.pdf`](ilp-cdraft.pdf)
-(6pp draft) and [`enq-ilavp.pdf`](enq-ilavp.pdf) (8pp, v2 — 24 Aug 2026).
-
----
-
 ## Mathematical Overview
 
 For integers `m, n ≥ 1` and a sequence `S = (S₁,…,Sₙ)` of subsets of `[m]`:
@@ -227,17 +196,6 @@ All combinatorial lemmas (`smatching_indicator_iff`, `coeff_elemSymm_IS`, `mem_i
 
 ---
 
-## Contributing
-
-See [`FORMALIZATION_PLAN.md`](FORMALIZATION_PLAN.md) for D1–D10 table, module DAG, and milestones M1–M7.
-
-1. Pick a `sorry` in a scaffold file or an open question in the plan (§8).
-2. Prove with `sorry`-free Lean, keeping statement types frozen.
-3. `lake build IndLorPoly.<Module>` + `#print axioms` audit.
-4. PR — swarm `smvu128xo` transcripts show review pattern.
-
----
-
 ## References
 
 - Eur, Nepal, Qin. *Induced Lorentzian and Volume Polynomials.* arXiv:2605.05319v2 (2026). [[PDF](enq-ilavp.pdf)]
@@ -247,7 +205,3 @@ See [`FORMALIZATION_PLAN.md`](FORMALIZATION_PLAN.md) for D1–D10 table, module 
 - Huh. *Volume polynomials — survey.* [Huh26] Ex 3.5 (Schubert realization of `elemSym`)
 - McDiarmid. *Rado's theorem for polymatroids.* [McD75] Thm 2 (Prop 2.3)
 - Welsh. *Matroid Theory* Ch. 8.2 — induced polymatroids `I_S(P)`.
-
-## License
-
-Apache 2.0 — see [LICENSE](LICENSE).
