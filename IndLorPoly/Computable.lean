@@ -11,7 +11,7 @@ import Mathlib
 
 open Finset
 
-namespace IndLorPoly
+namespace IndLorPoly.Computable
 
 variable {m n : ℕ}
 
@@ -172,4 +172,4 @@ def ex14β : Fin 3 → ℕ := ![2, 2, 1]
 #eval (smatchBetas ex14 ex14α).card
 #eval (SMatch ex14 ex14α).filter (fun w => colSum w = ex14β) |>.card
 
-end IndLorPoly
+end Computable

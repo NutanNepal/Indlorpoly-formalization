@@ -21,7 +21,7 @@ import Mathlib
 open Finset
 open scoped BigOperators
 
-namespace IndLorPoly
+namespace IndLorPoly.HallRado
 
 section RankFunction
 
@@ -202,4 +202,4 @@ theorem inBase_deltaRank_iff (N r : ℕ) (hN : 0 < N) (γ : Fin N → ℕ) :
 
 end Delta
 
-end IndLorPoly
+end HallRado

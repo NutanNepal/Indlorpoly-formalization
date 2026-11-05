@@ -76,12 +76,12 @@ IndLorPoly/
 ├── Matching_verified.lean     §1 indicator ind, sum_ind, SMatching 0-1 bridge (both directions)
 ├── Multiaffine_verified.lean  §1 coeff calculus: IS_monomial, coeff_elemSymm_IS (f_{S,r}=multiaffine(I_S(e_r)))
 ├── MatroidBasis.lean          Remark 2.6: basesFinset/baseCard, ct/ctMatroid, fMatroid, uniform case→Thm 1.1
-├── HallRado_feasibility.lean  §2 Prop 2.3: IsPolyRank/InBase/inducedRank/EMatching, Δ^r_{[N]}, inBase_induced_of_admits
+├── HallRado_feasibility.lean  §2 Prop 2.3: IsPolyRank/InBase/inducedRank/EMatching, Δ^r_{[N]} (ns `IndLorPoly.HallRado`)
 ├── Polymatroid_verified.lean  §1 polymatroid: IsPolymatroid/IsMatroid, inducedRank, BasePolytope, Δ^r
 ├── DirectSum_verified.lean    Thm 2.2 step: sumRank P₁⊕P₂ on E₁⊕E₂, sum_split, Q(P₁⊕P₂)=Q(P₁)×Q(P₂)
 ├── Theorem22Step_verified.lean Thm 2.2 uniform corollaries (counting form)
-├── Symbol_verified.lean       §2 symbol: κ-box, x^{[α]}, (x+u)^κ expansion, inducingOperator, symbolIS_eq, EGF
-├── Computable.lean            §1 executable: gammaEdges/SMatch/CTL + Example 1.4 #eval (8/36/17/5)
+├── Symbol_verified.lean       §2 symbol: κ-box, x^{[α]}, (x+u)^κ expansion, symbolIS_eq, EGF (ns `IndLorPoly.Symbol`)
+├── Computable.lean            §1 executable: gammaEdges/SMatch/CT + Example 1.4 #eval (ns `IndLorPoly.Computable`)
 ├── MainTheorem_verified.lean  Thm 1.1 from Thm 1.3 via maf (2 bookkeeping sorries)
 ├── Sec3_functorial.lean       §3: ASmat/Tmat, functoriality Tmat_mul (1 documented sorry)
 └── Cited.lean                 Cited linear realizability (opaque + 4 axioms)
@@ -204,7 +204,7 @@ grep -rn "sorry" IndLorPoly --include="*.lean" | grep -v "sorry-free" | wc -l
 # put `#print axioms IndLorPoly.symbolIS_eq` in a file importing the module
 ```
 
-**Current:** default target (11 fully verified modules) builds on `v4.36.0-rc2` (warnings: deprecated `if_pos`, unused `DecidableEq` → linter; no errors). Initial verification was done by the 8-member Ultramath swarm `smvu128xo`.
+**Current:** root `lake build` passes — `Build completed successfully (18224 jobs)` on `v4.36.0-rc2`, 11 modules, warnings only (deprecated `if_pos`, unused `DecidableEq`). `Multiaffine_verified`, `Sec3_functorial` and `MainTheorem_verified` were re-verified after the 4.36 `coeff` migration. Initial verification was done by the 8-member Ultramath swarm `smvu128xo`.
 
 **Remaining:** 2 bookkeeping `sorry`s in `MainTheorem_verified` (`coeff_maf`, `maf_IS_elementary`) are monomial-basis algebra with the proof plan in comments; `Sec3_functorial` has one documented `sorry` (`AS_support_eq_smatching`, see [`Sec3_notes.md`](IndLorPoly/Sec3_notes.md)).
 

@@ -17,7 +17,7 @@ import IndLorPoly.Basic_verified
 open MvPolynomial Finset
 open Classical
 
-namespace IndLorPoly
+namespace IndLorPoly.Symbol
 
 variable {m n : ℕ}
 
@@ -392,4 +392,4 @@ theorem Theorem_1_3_of_symbol_volume {m n : ℕ} (S : Fin n → Finset (Fin m))
     IsVolumePoly (Fin n) (inducingOperator S f) :=
   Prop_2_1_volume (inducingOperator S) κ hκ (h κ hκ) f hf hbox
 
-end IndLorPoly
+end Symbol
