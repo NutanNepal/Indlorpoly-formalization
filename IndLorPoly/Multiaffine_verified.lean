@@ -16,13 +16,11 @@ This file proves the coefficient-level content of that sentence, sorry-free:
 * `coeff_elemSymm_IS` -- the coefficient of `y^T` in `I_S(∑_{|B| = r} x_B)` is
   `C_T(S)`, i.e. the multi-affine part of `I_S(e_r)` is exactly `f_{S,r}`.
 -/
-import IndLorPoly.Basic
+import IndLorPoly.Basic_verified
 import IndLorPoly.Matching_verified
 import Mathlib.Algebra.MvPolynomial.Basic
 import Mathlib.Data.Nat.Factorial.Basic
 import Mathlib.Algebra.MvPolynomial.PDeriv
-
-def MvPolynomial.coeff_old {σ R : Type*} [CommSemiring R] (m : σ →₀ ℕ) (p : MvPolynomial σ R) : R := p.coeff m
 
 open Classical MvPolynomial
 
@@ -99,7 +97,7 @@ noncomputable def IS_monomial (S : Fin n → Finset (Fin m)) (α : Fin m → ℕ
 
 /-- The coefficient of a square-free monomial in a monomial `y^β`. -/
 lemma coeff_prod_X_pow {k : ℕ} (β : Fin k → ℕ) (δ : Fin k → ℕ) :
-    MvPolynomial.coeff_old (toF δ) ((∏ j, X j ^ (β j)) : MvPolynomial (Fin k) ℝ)
+    ((∏ j, X j ^ (β j)) : MvPolynomial (Fin k) ℝ).coeff (toF δ)
       = if β = δ then 1 else 0 := by
   rw [show ((∏ j, X j ^ (β j)) : MvPolynomial (Fin k) ℝ) = monomial (toF β) 1 from
     prod_X_pow_eq_monomial β ℝ, MvPolynomial.coeff_monomial]
@@ -114,13 +112,12 @@ lemma coeff_prod_X_pow {k : ℕ} (β : Fin k → ℕ) (δ : Fin k → ℕ) :
 `S`-matching from `T`, and `0` otherwise.  In particular the coefficient does *not*
 record the number of bijections `μ` (cf. the remark after Theorem 1.1). -/
 theorem coeff_IS_monomial_ind (B : Finset (Fin m)) (T : Finset (Fin n)) :
-    MvPolynomial.coeff_old (toF (ind (m := n) T)) (IS_monomial S (ind B))
+    (IS_monomial S (ind B)).coeff (toF (ind (m := n) T))
       = if SMatching S (ind B) (ind T) then 1 else 0 := by
   unfold IS_monomial
   rw [MvPolynomial.coeff_sum]
   have hterm : ∀ β ∈ matchingBetas S (ind B),
-      MvPolynomial.coeff_old (toF (ind (m := n) T))
-        (MvPolynomial.C (vecFact (ind B) / vecFact β) * ∏ j, X j ^ (β j))
+      (MvPolynomial.C (vecFact (ind B) / vecFact β) * ∏ j, X j ^ (β j)).coeff (toF (ind (m := n) T))
       = if β = ind T then (vecFact (ind B) / vecFact β) else 0 := by
     intro β _
     rw [MvPolynomial.coeff_C_mul, coeff_prod_X_pow]
@@ -147,7 +144,6 @@ theorem CT_eq_card_filter (T : Finset (Fin n)) :
     CT S T
       = ((Finset.univ.powersetCard T.card).filter (fun B => AdmitsSMatching S T B)).card := by
   unfold IndLorPoly.CT
-  rw [Nat.card_eq_fintype_card, Fintype.card_subtype]
   congr 1
   ext B
   simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_powersetCard,
@@ -174,11 +170,10 @@ coefficient of `y^T` in `I_S(∑_{|B|=r} x_B)` is `C_T(S)`.
 Together with `IndLorPoly.Theorems` this is the content of the reduction of
 Theorem 1.1 to Theorem 1.3 stated in the proof of Theorem 1.1. -/
 theorem coeff_elemSymm_IS (r : ℕ) {T : Finset (Fin n)} (hT : T.card = r) :
-    MvPolynomial.coeff_old (toF (ind (m := n) T))
-      (∑ B ∈ Finset.univ.powersetCard r, IS_monomial S (ind B)) = (CT S T : ℝ) := by
+    (∑ B ∈ Finset.univ.powersetCard r, IS_monomial S (ind B)).coeff (toF (ind (m := n) T)) = (CT S T : ℝ) := by
   rw [MvPolynomial.coeff_sum]
   have h : ∀ B ∈ Finset.univ.powersetCard r,
-      MvPolynomial.coeff_old (toF (ind (m := n) T)) (IS_monomial S (ind B))
+      (IS_monomial S (ind B)).coeff (toF (ind (m := n) T))
         = if AdmitsSMatching S T B then (1 : ℝ) else 0 := by
     intro B _
     rw [coeff_IS_monomial_ind, smatching_ind_iff]
@@ -217,8 +212,7 @@ lemma prod_X_eq_prod_pow_ind {k : ℕ} (T' : Finset (Fin k)) :
 /-- The coefficient of a multi-affine monomial in `x_{T'}`, i.e. `y_T` is a coefficient
 `1` of `y_{T'}` exactly when `T = T'`. -/
 lemma coeff_finset_prod_X {k : ℕ} (T T' : Finset (Fin k)) :
-    MvPolynomial.coeff_old (toF (ind T))
-      ((∏ t ∈ T', (MvPolynomial.X t : MvPolynomial (Fin k) ℝ))) = if T' = T then 1 else 0 := by
+    ((∏ t ∈ T', (MvPolynomial.X t : MvPolynomial (Fin k) ℝ))).coeff (toF (ind T)) = if T' = T then 1 else 0 := by
   rw [prod_X_eq_prod_pow_ind T', coeff_prod_X_pow]
   by_cases h : T' = T
   · simp [h]
@@ -232,13 +226,12 @@ otherwise.  This is the "easy" half of the identity
 `f_{S,r} = multi-affine part of I_S(e_r)`; the substantive half is
 `coeff_elemSymm_IS`. -/
 theorem f_S_r_coeff (r : ℕ) (T : Finset (Fin n)) :
-    MvPolynomial.coeff_old (toF (ind T)) (f_S_r S r)
+    (fSR S r).coeff (toF (ind T))
       = if T.card = r then (CT S T : ℝ) else 0 := by
-  unfold f_S_r
+  unfold fSR
   rw [MvPolynomial.coeff_sum]
   have hterm : ∀ T' ∈ Finset.univ.filter (fun T' : Finset (Fin n) => T'.card = r),
-      MvPolynomial.coeff_old (toF (ind T))
-        (MvPolynomial.C (CT S T' : ℝ) * ∏ t ∈ T', X t) = if T' = T then (CT S T : ℝ) else 0 := by
+      (MvPolynomial.C (CT S T' : ℝ) * ∏ t ∈ T', X t).coeff (toF (ind T)) = if T' = T then (CT S T : ℝ) else 0 := by
     intro T' _
     rw [MvPolynomial.coeff_C_mul, coeff_finset_prod_X]
     by_cases h : T' = T <;> simp [h]

@@ -42,8 +42,7 @@ lake build IndLorPoly
 **Toolchain:** pinned in [`lean-toolchain`](lean-toolchain) (`leanprover/lean4:v4.36.0-rc2`),
 Mathlib `7881f45c` in [`lake-manifest.json`](lake-manifest.json).
 
-Paper sources: [`ilp-cdraft.tex`](ilp-cdraft.tex) / [`ilp-cdraft.pdf`](ilp-cdraft.pdf)
-(6pp draft) and [`enq-ilavp.pdf`](enq-ilavp.pdf) (8pp, v2 — 24 Aug 2026).
+Paper: [`enq-ilavp.pdf`](enq-ilavp.pdf) (8pp, v2 — 24 Aug 2026).
 
 ---
 
@@ -83,10 +82,11 @@ IndLorPoly/
 ├── Theorem22Step_verified.lean Thm 2.2 uniform corollaries (counting form)
 ├── Symbol_verified.lean       §2 symbol: κ-box, x^{[α]}, (x+u)^κ expansion, inducingOperator, symbolIS_eq, EGF
 ├── Computable.lean            §1 executable: gammaEdges/SMatch/CTL + Example 1.4 #eval (8/36/17/5)
-├── Cited.lean                 Cited linear realizability (opaque + 4 axioms)
-└── (scaffold) Basic/Operator/Symbol/...  draft files — excluded from default build
+├── MainTheorem_verified.lean  Thm 1.1 from Thm 1.3 via maf (2 bookkeeping sorries)
+├── Sec3_functorial.lean       §3: ASmat/Tmat, functoriality Tmat_mul (1 documented sorry)
+└── Cited.lean                 Cited linear realizability (opaque + 4 axioms)
 
-IndLorPoly.lean                 Root — re-exports 11 verified modules
+IndLorPoly.lean                 Root — re-exports the 11 verified modules
 FORMALIZATION_PLAN.md           Dependency table D1–D10, module DAG, milestones M1–M7
 ```
 
@@ -123,8 +123,7 @@ Basic_verified
 \* `coeff_maf`/`maf_IS_elementary` are pure `coeff_sum`/`coeff_monomial` bookkeeping, plan in comments.
 † `AS_support_eq_smatching` — blocked on `HasAntidiagonal` for `→₀ℕ`, fix via `coeff_mul_monomial` documented in [`Sec3_notes.md`](IndLorPoly/Sec3_notes.md).
 
-**Verified: 11 modules, ~4340 lines, 0 hidden sorries in default target.**
-Scaffold files (`Operator`, `Section3`, …) carry 24 legacy sorries outside the build — see [`FORMALIZATION_PLAN.md`](FORMALIZATION_PLAN.md).
+**Verified: 13 modules, ~3080 lines** — 11 fully verified (0 real sorries) plus `MainTheorem_verified` (2 bookkeeping sorries) and `Sec3_functorial` (1 documented sorry).
 
 ---
 
@@ -201,13 +200,13 @@ lake build IndLorPoly.Symbol_verified -v
 # Check sorries (should match default-target comment above)
 grep -rn "sorry" IndLorPoly --include="*.lean" | grep -v "sorry-free" | wc -l
 
-# Audit axioms (combinatorial theorems → standard 3 only)
-lake env lean --run .scratch/audit.lean
+# Audit axioms of a chosen theorem (combinatorial results → standard 3 only)
+# put `#print axioms IndLorPoly.symbolIS_eq` in a file importing the module
 ```
 
-**Current:** 11-module default target builds on `v4.36.0-rc2` (warnings: deprecated `if_pos`, unused `DecidableEq` → linter; no errors). Full `lake build` ran via 8-member Ultramath swarm `smvu128xo` — transcripts in [`.ultramath/smvu128xo/`](.ultramath/smvu128xo/) (`m3/m5` copies).
+**Current:** default target (11 fully verified modules) builds on `v4.36.0-rc2` (warnings: deprecated `if_pos`, unused `DecidableEq` → linter; no errors). Initial verification was done by the 8-member Ultramath swarm `smvu128xo`.
 
-**Remaining:** full `lake build` needs `MvPolynomial.coeff` → `p.coeff m` migration for `Multiaffine_verified`/`Sec3_functorial`/`MainTheorem_verified` (dot-notation change in 4.36); 2 bookkeeping `sorry`s in `MainTheorem_verified` (`coeff_maf`, `maf_IS_elementary`) are monomial-basis algebra with plan in file.
+**Remaining:** 2 bookkeeping `sorry`s in `MainTheorem_verified` (`coeff_maf`, `maf_IS_elementary`) are monomial-basis algebra with the proof plan in comments; `Sec3_functorial` has one documented `sorry` (`AS_support_eq_smatching`, see [`Sec3_notes.md`](IndLorPoly/Sec3_notes.md)).
 
 ---
 
@@ -231,7 +230,7 @@ All combinatorial lemmas (`smatching_indicator_iff`, `coeff_elemSymm_IS`, `mem_i
 
 See [`FORMALIZATION_PLAN.md`](FORMALIZATION_PLAN.md) for D1–D10 table, module DAG, and milestones M1–M7.
 
-1. Pick a `sorry` in a scaffold file or an open question in the plan (§8).
+1. Pick a `sorry` in `MainTheorem_verified`/`Sec3_functorial` or an open question in the plan (§8).
 2. Prove with `sorry`-free Lean, keeping statement types frozen.
 3. `lake build IndLorPoly.<Module>` + `#print axioms` audit.
 4. PR — swarm `smvu128xo` transcripts show review pattern.

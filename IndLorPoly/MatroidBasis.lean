@@ -182,7 +182,7 @@ of the paper (`f_{S,r}` lives in the multiaffine part of `R[y]`). -/
 
 /-- A polynomial is multi-affine when no monomial contains a square of a variable. -/
 def IsMultiaffine (f : MvPolynomial (Fin n) ℝ) : Prop :=
-  ∀ (a : Fin n →₀ ℕ) (i : Fin n), 2 ≤ a i → MvPolynomial.coeff a f = 0
+  ∀ (a : Fin n →₀ ℕ) (i : Fin n), 2 ≤ a i → f.coeff a = 0
 
 lemma degreeOf_squarefreeMon_le_one (i : Fin n) (T : Finset (Fin n)) :
     MvPolynomial.degreeOf i (squarefreeMon T) ≤ 1 := by
@@ -199,7 +199,7 @@ lemma degreeOf_squarefreeMon_le_one (i : Fin n) (T : Finset (Fin n)) :
         split_ifs <;> simp
 
 lemma coeff_squarefreeMon_eq_zero {a : Fin n →₀ ℕ} {i : Fin n} (hi : 2 ≤ a i)
-    (T : Finset (Fin n)) : MvPolynomial.coeff a (squarefreeMon T) = 0 := by
+    (T : Finset (Fin n)) : (squarefreeMon T).coeff a = 0 := by
   classical
   have hle := degreeOf_squarefreeMon_le_one i T
   have hnot : a ∉ (squarefreeMon T).support := by

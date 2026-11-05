@@ -11,7 +11,7 @@ This file is *sorry-free*.  It contains the combinatorial heart of §1:
 * fibre-count lemmas, the vanishing of `C_T` for `|T| > m`, and the
   finiteness/boundedness results needed to make `matchingBetas` a finite set.
 -/
-import IndLorPoly.Basic
+import IndLorPoly.Basic_verified
 import Mathlib.Data.Matrix.Basic
 import Mathlib.Data.Finset.Powerset
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic

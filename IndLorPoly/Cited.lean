@@ -23,8 +23,8 @@ Remark (point of honesty): `isPolymatroid_of_linearlyRealizable` is *provable*
 from `Submodule.finrank_sup_add_finrank_inf_eq`; we leave it as a citation
 because the dimension bookkeeping is not part of this file's assignment.
 -/
-import Polymatroid
-import DirectSum
+import IndLorPoly.Polymatroid_verified
+import IndLorPoly.DirectSum_verified
 
 open Finset
 open scoped BigOperators

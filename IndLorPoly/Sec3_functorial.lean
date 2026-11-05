@@ -47,7 +47,7 @@ noncomputable def linForm (c : τ → σ → ℚ) (a : τ) : MvPolynomial σ ℚ
 
 /-- Coefficient formula for a linear form: `[y^m] (∑_j c_j y_j) = ∑_j c_j [m = e_j]`. -/
 lemma coeff_linForm (c : τ → σ → ℚ) (a : τ) (m : σ →₀ ℕ) :
-    MvPolynomial.coeff m (linForm c a) =
+    (linForm c a).coeff m =
       ∑ j, c a j * (if Finsupp.single j 1 = m then 1 else 0) := by
   simp only [linForm, MvPolynomial.coeff_sum, MvPolynomial.coeff_C_mul,
     MvPolynomial.coeff_X]
@@ -55,7 +55,7 @@ lemma coeff_linForm (c : τ → σ → ℚ) (a : τ) (m : σ →₀ ℕ) :
 /-- If a coefficient of a linear form does not vanish, the exponent is a single
 variable `e_j` carrying a nonzero coefficient. -/
 lemma coeff_linForm_ne {c : τ → σ → ℚ} {a : τ} {m : σ →₀ ℕ}
-    (h : MvPolynomial.coeff m (linForm c a) ≠ 0) :
+    (h : (linForm c a).coeff m ≠ 0) :
     ∃ j, m = Finsupp.single j 1 ∧ c a j ≠ 0 := by
   rw [coeff_linForm] at h
   obtain ⟨j, -, hj⟩ := Finset.exists_ne_zero_of_sum_ne_zero h
@@ -67,7 +67,7 @@ lemma coeff_linForm_ne {c : τ → σ → ℚ} {a : τ} {m : σ →₀ ℕ}
 
 /-- A nonnegative linear form has nonnegative coefficients. -/
 lemma coeff_linForm_nonneg {c : τ → σ → ℚ} (hc : ∀ a j, 0 ≤ c a j) (a : τ)
-    (m : σ →₀ ℕ) : 0 ≤ MvPolynomial.coeff m (linForm c a) := by
+    (m : σ →₀ ℕ) : 0 ≤ (linForm c a).coeff m := by
   rw [coeff_linForm]
   refine Finset.sum_nonneg fun j _ => ?_
   split_ifs <;> simp [hc]
@@ -75,7 +75,7 @@ lemma coeff_linForm_nonneg {c : τ → σ → ℚ} (hc : ∀ a j, 0 ≤ c a j) (
 /-- A nonnegative linear form has a positive coefficient on each variable that
 occurs with a positive coefficient. -/
 lemma coeff_linForm_single_pos {c : τ → σ → ℚ} (hc : ∀ a j, 0 ≤ c a j) {a : τ} {j : σ}
-    (hj : c a j ≠ 0) : MvPolynomial.coeff (Finsupp.single j 1) (linForm c a) ≠ 0 := by
+    (hj : c a j ≠ 0) : (linForm c a).coeff (Finsupp.single j 1) ≠ 0 := by
   have hterm : 0 < c a j * (if Finsupp.single j 1 = Finsupp.single j 1 then 1 else 0) := by
     rw [if_pos rfl, mul_one]
     exact lt_of_le_of_ne (hc a j) (Ne.symm hj)
@@ -171,8 +171,7 @@ agrees with that of `I_S(x^A)`.
 The combinatorial core is `coeff_prod_linForm_ne_zero_iff`. -/
 theorem AS_support_eq_smatching (S : Fin n → Finset (Fin m)) (A : Finset (Fin m))
     (β : Fin n → ℕ) :
-    MvPolynomial.coeff (Finsupp.equivFunOnFinite.symm β)
-      (AS S (∏ i ∈ A, MvPolynomial.X i)) ≠ 0 ↔
+    (AS S (∏ i ∈ A, MvPolynomial.X i)).coeff (Finsupp.equivFunOnFinite.symm β) ≠ 0 ↔
       ∃ W : Matrix (Fin m) (Fin n) ℕ,
         (∀ i ∈ A, ∀ j, W i j ≠ 0 → i ∈ S j) ∧
         (∀ i ∈ A, ∑ j, W i j = 1) ∧

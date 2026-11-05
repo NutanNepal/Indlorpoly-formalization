@@ -12,7 +12,7 @@ contains `sorry`s and §2 should not depend on them.  `prod_X_pow_eq_monomial` b
 fills one of those holes.
 -/
 import Mathlib
-import IndLorPoly.Basic
+import IndLorPoly.Basic_verified
 
 open MvPolynomial Finset
 open Classical
@@ -170,7 +170,7 @@ lemma mem_matchingBetas {S : Fin n → Finset (Fin m)} {α : Fin m → ℕ} {β 
   · rintro ⟨_, h⟩; exact h
   · intro h
     refine ⟨fun j => ?_, h⟩
-    have hsum := SMatching_sum_eq S h
+    have hsum := SMatching_sum_eq h
     have h1 : β j ≤ ∑ k, β k :=
       Finset.single_le_sum (f := fun k => β k) (fun _ _ => Nat.zero_le _) (Finset.mem_univ j)
     rw [← hsum] at h1

@@ -1,6 +1,6 @@
 # Formalization Plan: Induced Lorentzian Polynomials ( Eur–Nepal–Qin )
 
-Source: `ilp-cdraft.tex` / `ilp-cdraft.pdf` — 6 pages.
+Source: `enq-ilavp.pdf` — v2, 8 pages (24 Aug 2026).
 Lean: `leanprover/lean4:v4.30.0-rc2`, Mathlib `452dba9` (master).
 
 ## 1. Source theorems in dependency order

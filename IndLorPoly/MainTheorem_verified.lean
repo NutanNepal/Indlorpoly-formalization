@@ -3,7 +3,7 @@ Formalization of the deduction of Theorem 1.1 from Theorem 1.3
 (Eur, Nepal, Qin, arXiv 2605.05319v2, §1 "Proof of Theorem 1.1 from Theorem 1.3").
 -/
 import Mathlib
-import IndLorPoly.Basic
+import IndLorPoly.Basic_verified
 
 /-!
 # The inducing operator, the multi-affine part, and Theorem 1.1
@@ -116,7 +116,7 @@ theorem IS_monomial (S : Fin n → Finset (Fin m)) (s : Fin m →₀ ℕ) :
 In particular, for squarefree `α = 1_B` and `β = 1_T` the coefficient is `1` exactly when a
 weighting exists. -/
 theorem coeff_ISm (S : Fin n → Finset (Fin m)) (α : Fin m → ℕ) (β : Fin n → ℕ) :
-    MvPolynomial.coeff (vecToFinsupp β) (ISm S α) =
+    (ISm S α).coeff (vecToFinsupp β) =
       if SMatching S α β then vecFact α / vecFact β else 0 := by
   classical
   rw [ISm, MvPolynomial.coeff_sum]
@@ -134,7 +134,7 @@ theorem coeff_ISm (S : Fin n → Finset (Fin m)) (α : Fin m → ℕ) (β : Fin 
     exact fun heq => h (vecToFinsupp_injective heq ▸ (mem_matchingBetas S α b).mp hb)
 
 theorem coeff_IS_monomial (S : Fin n → Finset (Fin m)) (α : Fin m → ℕ) (β : Fin n → ℕ) :
-    MvPolynomial.coeff (vecToFinsupp β) (IS S (monomial (vecToFinsupp α) 1)) =
+    (IS S (monomial (vecToFinsupp α) 1)).coeff (vecToFinsupp β) =
       if SMatching S α β then vecFact α / vecFact β else 0 := by
   rw [IS_monomial, fun_vecToFinsupp, coeff_ISm]
 
@@ -165,7 +165,7 @@ theorem maf_monomial (k : ℕ) (s : Fin k →₀ ℕ) (c : ℝ) :
 
 /-- The multi-affine part keeps squarefree coefficients and kills the rest. -/
 theorem coeff_maf (k : ℕ) (p : MvPolynomial (Fin k) ℝ) (s : Fin k →₀ ℕ) :
-    MvPolynomial.coeff s (maf k p) = if Squarefree s then MvPolynomial.coeff s p else 0 := by
+    (maf k p).coeff s = if Squarefree s then p.coeff s else 0 := by
   -- Decompose `p` in the monomial basis and use `maf_monomial` termwise.
   -- (The remaining work is the pure bookkeeping identity
   -- `p = ∑ t ∈ p.support, monomial t (p.coeff t)` and `coeff_sum`/`coeff_monomial`.)
