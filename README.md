@@ -120,7 +120,7 @@ Basic_verified
 | D9 | §3 `A_S`, `Tmat` functoriality | `ASmat`, `Tmat_mul` | `Sec3_functorial` | ✓ 1 sorry† |
 | D10 | Ex 1.4/2.5/3.4, Rmk 2.4/2.6 | `ex14`, `fMatroid`, `ct_eq_zero_of_lt` | `Computable`, `MatroidBasis` | ✓ 0 sorry |
 
-\* `coeff_maf`/`maf_IS_elementary` are pure `coeff_sum`/`coeff_monomial` bookkeeping, plan in comments.
+\* `maf_IS_elementary` is pure `coeff_sum`/`coeff_monomial` bookkeeping, with the plan in comments.
 † `AS_support_eq_smatching` — blocked on `HasAntidiagonal` for `→₀ℕ`, fix via `coeff_mul_monomial` documented in [`Sec3_notes.md`](IndLorPoly/Sec3_notes.md).
 
 **Verified: 13 modules, ~3080 lines** — 11 fully verified (0 real sorries) plus `MainTheorem_verified` (2 bookkeeping sorries) and `Sec3_functorial` (1 documented sorry).
@@ -206,7 +206,7 @@ grep -rn "sorry" IndLorPoly --include="*.lean" | grep -v "sorry-free" | wc -l
 
 **Current:** root `lake build` passes — `Build completed successfully (18224 jobs)` on `v4.36.0-rc2`, 11 modules, warnings only (deprecated `if_pos`, unused `DecidableEq`). `Multiaffine_verified`, `Sec3_functorial` and `MainTheorem_verified` were re-verified after the 4.36 `coeff` migration. Initial verification was done by the 8-member Ultramath swarm `smvu128xo`.
 
-**Remaining:** 2 bookkeeping `sorry`s in `MainTheorem_verified` (`coeff_maf`, `maf_IS_elementary`) are monomial-basis algebra with the proof plan in comments; `Sec3_functorial` has one documented `sorry` (`AS_support_eq_smatching`, see [`Sec3_notes.md`](IndLorPoly/Sec3_notes.md)).
+**Remaining:** 1 `sorry` in `MainTheorem_verified` (`maf_IS_elementary`) is monomial-basis coefficient bookkeeping; `Sec3_functorial` has one documented `sorry` (`AS_support_eq_smatching`, see [`Sec3_notes.md`](IndLorPoly/Sec3_notes.md)).
 
 ---
 

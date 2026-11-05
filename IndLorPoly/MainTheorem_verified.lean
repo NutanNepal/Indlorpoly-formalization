@@ -166,11 +166,50 @@ theorem maf_monomial (k : ℕ) (s : Fin k →₀ ℕ) (c : ℝ) :
 /-- The multi-affine part keeps squarefree coefficients and kills the rest. -/
 theorem coeff_maf (k : ℕ) (p : MvPolynomial (Fin k) ℝ) (s : Fin k →₀ ℕ) :
     (maf k p).coeff s = if Squarefree s then p.coeff s else 0 := by
-  -- Decompose `p` in the monomial basis and use `maf_monomial` termwise.
-  -- (The remaining work is the pure bookkeeping identity
-  -- `p = ∑ t ∈ p.support, monomial t (p.coeff t)` and `coeff_sum`/`coeff_monomial`.)
-  sorry
-
+  by_cases hssq : Squarefree s
+  · rw [if_pos hssq, MvPolynomial.as_sum p, map_sum, MvPolynomial.coeff_sum]
+    have hterm : ∀ t ∈ p.support,
+        (maf k (monomial t (p.coeff t))).coeff s = if t = s then p.coeff s else 0 := by
+      intro t _
+      rw [maf_monomial]
+      by_cases hsq : Squarefree t
+      · rw [if_pos hsq, MvPolynomial.coeff_monomial]
+        by_cases hts : t = s
+        · subst hts
+          simp
+        · rw [if_neg hts]
+          simp [hts]
+      · rw [if_neg hsq]
+        simp only [MvPolynomial.coeff_zero, Pi.zero_apply]
+        by_cases hts : t = s
+        · subst hts
+          exact absurd hssq hsq
+        · simp [hts]
+    rw [Finset.sum_congr rfl hterm]
+    by_cases hmem : s ∈ p.support
+    · rw [Finset.sum_eq_single s]
+      · simp
+      · intro b _ hbs
+        simp [hbs]
+      · intro hnot
+        exact absurd hmem hnot
+    · rw [Finset.sum_eq_zero]
+      · simp [MvPolynomial.notMem_support_iff.mp hmem]
+      · intro b hb
+        have hbs : b ≠ s := fun h => hmem (h ▸ hb)
+        simp [hbs]
+  · rw [if_neg hssq, MvPolynomial.as_sum p, map_sum, MvPolynomial.coeff_sum]
+    rw [Finset.sum_eq_zero]
+    · intro t _
+      rw [maf_monomial]
+      by_cases hsq : Squarefree t
+      · rw [if_pos hsq, MvPolynomial.coeff_monomial]
+        by_cases hts : t = s
+        · subst hts
+          exact absurd hsq hssq
+        · simp [hts]
+      · rw [if_neg hsq]
+        simp
 /-! ### The elementary symmetric polynomial and the deduction of Theorem 1.1 -/
 
 /-- The elementary symmetric polynomial `∑_{B ∈ binom([m],r)} x^B`. -/
