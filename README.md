@@ -2,8 +2,7 @@
 
 [![Lean](https://img.shields.io/badge/Lean-4.36.0--rc2-blue?logo=lean)](https://lean-lang.org)
 [![Mathlib](https://img.shields.io/badge/Mathlib-7881f45c-green)](https://github.com/leanprover-community/mathlib4)
-[![Build](https://github.com/NutanNepal/lean-playground-indlorpoly/actions/workflows/lean_action_ci.yml/badge.svg)](https://github.com/NutanNepal/lean-playground-indlorpoly/actions)
-[![License](https://img.shields.io/badge/License-Apache%202.0-lightgrey)](LICENSE)
+[![Build](https://github.com/NutanNepal/lean-playground-indlorpoly/actions/workflows/lean_action_ci.yml/badge.svg)](https://github.com/NutanNepal/lean-playground-indlorpoly/actions)\
 
 Formalization of **"Induced Lorentzian and Volume Polynomials"**
 by Christopher Eur, Nutan Nepal, Daniel Qin — [arXiv:2605.05319v2](https://arxiv.org/abs/2605.05319).
