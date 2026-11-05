@@ -35,27 +35,4 @@ namespace IndLorPoly
 Declared `opaque`: we never unfold it, only use the cited facts below. -/
 opaque LinearlyRealizable : ∀ {E : Type*} [Fintype E] [DecidableEq E], (Finset E → ℕ) → Prop
 
-/-- AXIOM (cited, paper p. 4): "It is straightforward to verify" that a linearly
-realizable polymatroid is a polymatroid. -/
-axiom isPolymatroid_of_linearlyRealizable {E : Type*} [Fintype E] [DecidableEq E]
-    {rk : Finset E → ℕ} (h : LinearlyRealizable rk) : IsPolymatroid rk
-
-/-- AXIOM (cited, paper p. 4): `Δ^r_[N]` is linearly realizable over any field,
-by the diagonal embedding of `k^r` in `(k^r)^{⊕[N]}`. -/
-axiom uniform_linearlyRealizable (N r : ℕ) : LinearlyRealizable (uniformRank N r)
-
-/-- AXIOM (cited, paper p. 4): the induced polymatroid `I_S(P)` of a linearly
-realizable polymatroid is linearly realizable over the same field, as the image
-of `L` under `V_{[m]} → V_{S_1} ⊕ ⋯ ⊕ V_{S_n}`. -/
-axiom induced_linearlyRealizable {m n : ℕ} {rk : Finset (Fin m) → ℕ}
-    (h : LinearlyRealizable rk) (S : Fin n → Finset (Fin m)) :
-    LinearlyRealizable (inducedRank rk S)
-
-/-- AXIOM (cited, paper p. 4): a direct sum of linearly realizable polymatroids
-is linearly realizable (immediate from the definition). -/
-axiom sumRank_linearlyRealizable {E₁ E₂ : Type*} [Fintype E₁] [DecidableEq E₁]
-    [Fintype E₂] [DecidableEq E₂] {rk₁ : Finset E₁ → ℕ} {rk₂ : Finset E₂ → ℕ}
-    (h₁ : LinearlyRealizable rk₁) (h₂ : LinearlyRealizable rk₂) :
-    LinearlyRealizable (sumRank rk₁ rk₂)
-
 end IndLorPoly

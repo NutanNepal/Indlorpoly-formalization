@@ -216,11 +216,15 @@ Deep results are **opaque + cited axioms**, never unfolded — isolated in `Cite
 
 | Axiom | Citation | Where |
 |---|---|---|
-| `Prop_2_1_lorentzian/volume` | BH20 Thm 3.2, GHM+25 Thm 1.12 | `Symbol_verified` |
+| `Prop_2_1_volume` | GHM+25 Thm 1.12 | `Symbol_verified` |
 | `mcdiarmid` (⇒ Hall–Rado) | McD75 Thm 2 / max-flow | `HallRado_feasibility` |
-| `isPolymatroid/uniform/induced/sumRank_linearlyRealizable` | paper p.4, [EL24] | `Cited` |
-| `theorem_1_1_*`, `remark_2_6_*`, `maf_lorentzian`, `elementary_realizable`, `IS_preserves_*` | BH20 3.5/4.6, GHM+25 3.3/2.10, Huh26 3.5 | `MatroidBasis`, `MainTheorem_verified` |
-| `IsLorentzian`, `IsRealizableVolumePolynomial` | BH20 Def 2.4, GHM+25 | `opaque` predicates |
+| `maf_lorentzian`, `maf_realizable` | BH20 Cor 3.5, GHM+25 Cor 3.3 | `MainTheorem_verified` |
+| `elementary_realizable`, `lorentzian_of_realizable` | Huh26 Ex 3.5, BH20 Thm 4.6 | `MainTheorem_verified` |
+| `IS_preserves_lorentzian`, `IS_preserves_realizable` | Theorem 1.3 (from Thm 2.2 + EL24) | `MainTheorem_verified` |
+| `theorem_1_1_lorentzian`, `theorem_1_1_realizable` | Theorem 1.1 specialisation | `MatroidBasis` |
+| `IsLorentzian`, `IsRealizableVolumePolynomial`, `IsLorentzianPoly`, `IsVolumePoly` | BH20 Def 2.4, GHM+25 | `opaque` predicates |
+
+Unused axioms removed (previously 17, now **10**): the four `Cited.lean` linear-realizability axioms, `remark_2_6_*`, and `Prop_2_1_lorentzian`.
 
 All combinatorial lemmas (`smatching_indicator_iff`, `coeff_elemSymm_IS`, `mem_inBase_sumRank`, `symbolIS_eq`, etc.) are **proved from scratch**, `#print axioms = propext/Classical.choice/Quot.sound`.
 

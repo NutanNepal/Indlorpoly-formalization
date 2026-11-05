@@ -252,16 +252,6 @@ axiom theorem_1_1_lorentzian (S : Fin n → Finset (Fin m)) (r : ℕ) (hr : r �
 axiom theorem_1_1_realizable (S : Fin n → Finset (Fin m)) (r : ℕ) (hr : r ≤ m) :
     IsRealizableVolumePolynomial (ctPoly S r)
 
-/-- Paper, Remark 2.6 (Lorentzian half): for a matroid `M` of rank `r`, the polynomial
-`∑_{T} C_T(M,S) y^T` is Lorentzian. Axiomatised: deduced in the paper from Theorem 1.2. -/
-axiom remark_2_6_lorentzian (M : Matroid (Fin m)) (S : Fin n → Finset (Fin m)) :
-    IsLorentzian (fMatroid M S (baseCard M))
-
-/-- Paper, Remark 2.6 (volume-polynomial half): realizable whenever `M` is realizable over
-the ground field. Axiomatised (it is the second half of Remark 2.6 of the paper). -/
-axiom remark_2_6_realizable (M : Matroid (Fin m)) (S : Fin n → Finset (Fin m)) :
-    IsRealizableVolumePolynomial (fMatroid M S (baseCard M))
-
 /-! ### Consequence: coherence of the axiomatisation with Theorem 1.1
 
 The matroid statement, *restricted to the uniform matroid*, is Theorem 1.1 itself. Since

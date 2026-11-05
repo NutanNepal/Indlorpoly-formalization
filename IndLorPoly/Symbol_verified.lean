@@ -355,15 +355,6 @@ sense of [GHM+25].  Opaque, cf. `IsLorentzianPoly`. -/
 opaque IsVolumePoly (σ : Type) [Fintype σ] [DecidableEq σ]
     (f : MvPolynomial σ ℝ) : Prop
 
-/-- **Proposition 2.1, first half** — [BH20, Theorem 3.2].  If `T` is a linear operator
-on the `κ`-box whose symbol is Lorentzian, then `T` maps Lorentzian polynomials in the
-`κ`-box to Lorentzian polynomials. -/
-axiom Prop_2_1_lorentzian {m n : ℕ} (T : MvPolynomial (Fin m) ℝ →ₗ[ℝ] MvPolynomial (Fin n) ℝ)
-    (κ : Fin m → ℕ) (hκ : ∀ i, 0 < κ i)
-    (hsym : IsLorentzianPoly (Fin n ⊕ Fin m) (symbol T κ))
-    (f : MvPolynomial (Fin m) ℝ) (hf : IsLorentzianPoly (Fin m) f) (hbox : InBox κ f) :
-    IsLorentzianPoly (Fin n) (T f)
-
 /-- **Proposition 2.1, second half** — [GHM+25, Theorem 1.12].  If the symbol of `T` is
 a realizable volume polynomial, then so is the image of every realizable volume
 polynomial in the `κ`-box. -/
